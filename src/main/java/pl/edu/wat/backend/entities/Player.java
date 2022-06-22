@@ -28,4 +28,14 @@ public class Player {
 
     @Column(name = "Weight")
     private float weight;
+
+    public Player () {
+
+    }
+    public Player (String name, String surname, float height, float weight) {
+        this.name = name;
+        this.surname = surname;
+        this.height = height;
+        this.weight = weight;
+    }
 }

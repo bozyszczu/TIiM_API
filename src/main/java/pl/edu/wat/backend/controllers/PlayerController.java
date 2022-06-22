@@ -4,48 +4,46 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.wat.backend.dtos.PlayerRequest;
-import pl.edu.wat.backend.dtos.PlayerResponse;
+import pl.edu.wat.backend.dtos.PlayerDTO;
 import pl.edu.wat.backend.entities.Player;
 import pl.edu.wat.backend.services.PlayerService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 public class PlayerController {
 
     private final PlayerService playerService;
 
-    @GetMapping("/api/players")
-    public ResponseEntity<List<PlayerResponse>> getPlayers(){
-        List<PlayerResponse> players = playerService.getPlayers();
+    @GetMapping("players")
+    public ResponseEntity<List<Player>> getPlayers() {
 
-        return new ResponseEntity<>(players, HttpStatus.OK);
+        return ResponseEntity.ok().body(playerService.getPlayers());
     }
 
-    @GetMapping("/api/players/{id}")
-    public ResponseEntity <Player> getOrdersById(@PathVariable long id) {
+    @GetMapping("players/{id}")
+    public ResponseEntity <Player> getPlayerById(@PathVariable long id) {
 
         return ResponseEntity.ok().body(playerService.getPlayerById(id));
     }
 
-    @PostMapping("/api/players")
-    public ResponseEntity<Player> addOrder(@RequestBody PlayerRequest playerRequest) {
+    @PostMapping("players")
+    public ResponseEntity<Player> addPlayer(@RequestBody PlayerDTO player) {
 
-        return ResponseEntity.ok().body(this.playerService.addPlayer(playerRequest));
+        return (ResponseEntity.ok().body(this.playerService.addPlayer(player)));
     }
 
-    @PutMapping ("/api/players/{id}")
-    public ResponseEntity<Player> editOrder (@PathVariable long id, @RequestBody PlayerRequest request){
+    @PutMapping("players/{id}")
+    public ResponseEntity<Player> editPlayer (@RequestBody Player player, @PathVariable long id){
 
-        playerService.editPlayer(id,request);
-        return new ResponseEntity<>(HttpStatus.OK);
+        player.setId((int) id);
+        return ResponseEntity.ok().body(this.playerService.editPlayer(player));
     }
 
-    @DeleteMapping("/api/players/{id}")
-    public HttpStatus deleteOrder(@PathVariable long id) {
+    @DeleteMapping("players/{id}")
+    public HttpStatus deletePlayer(@PathVariable long id) {
 
         this.playerService.deletePlayer(id);
         return HttpStatus.OK;

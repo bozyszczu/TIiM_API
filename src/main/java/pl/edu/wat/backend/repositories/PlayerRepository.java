@@ -6,5 +6,5 @@ import pl.edu.wat.backend.entities.Player;
 
 @Repository
 public interface PlayerRepository extends JpaRepository <Player, Long> {
-    Player getPlayerById (long playerId);
+
 }

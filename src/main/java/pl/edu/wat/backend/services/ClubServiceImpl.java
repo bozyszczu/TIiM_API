@@ -2,8 +2,7 @@ package pl.edu.wat.backend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.wat.backend.dtos.ClubRequest;
-import pl.edu.wat.backend.dtos.ClubResponse;
+import pl.edu.wat.backend.dtos.ClubDTO;
 import pl.edu.wat.backend.entities.Club;
 import pl.edu.wat.backend.exceptions.ResourceNotFoundException;
 import pl.edu.wat.backend.repositories.ClubRepository;
@@ -11,25 +10,18 @@ import pl.edu.wat.backend.repositories.ClubRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 @Service
 @Transactional
 public class ClubServiceImpl implements ClubService {
 
-    private final ClubRepository clubRepository;
-
-    @Autowired
-    public ClubServiceImpl(ClubRepository clubRepository) {
-        this.clubRepository = clubRepository;
-    }
+@Autowired
+    ClubRepository clubRepository;
 
     @Override
-    public List<ClubResponse> getClubs() {
-        return StreamSupport.stream(clubRepository.findAll().spliterator(), false)
-                .map(entity -> new ClubResponse(entity.getClubName(), entity.getShortname(), entity.getCoach(), entity.getStadium(), entity.getWebPage(), entity.getPlayers()))
-                .collect(Collectors.toList());
+    public List<Club> getClubs() {
+        return this.clubRepository.findAll();
     }
 
     @Override
@@ -44,7 +36,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public Club addClub (ClubRequest request) {
+    public Club addClub (ClubDTO request) {
         Club newClub = new Club();
         newClub.setId(0L);
         newClub.setClubName(request.getClubName());
@@ -58,18 +50,21 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public ClubResponse editClub (Long id, ClubRequest request) {
-        return clubRepository.findById(id).map(club -> {
-            club.setClubName(request.getClubName());
-            club.setShortname(request.getShortname());
-            club.setStadium(request.getStadium());
-            club.setWebPage(request.getWebPage());
-            club.setPlayers(request.getPlayers());
-            Club c = clubRepository.save(club);
-            return new ClubResponse(c.getClubName(), c.getShortname(), c.getCoach(), c.getStadium(), c.getWebPage(), c.getPlayers());
-        }).orElseThrow(()-> new ResourceNotFoundException("Nie znaleziono klubu o takim id: " + id));
+    public Club editClub (Club club) {
+        Optional<Club> clubDb = this.clubRepository.findById(club.getId());
+        if (clubDb.isPresent()) {
+            Club editedClub = clubDb.get();
+            editedClub.setClubName(club.getClubName());
+            editedClub.setShortname(club.getShortname());
+            editedClub.setStadium(club.getStadium());
+            editedClub.setWebPage(club.getWebPage());
+            editedClub.setPlayers(club.getPlayers());
+            clubRepository.save(club);
+            return editedClub;
+        } else {
+            throw new ResourceNotFoundException("Nie znaleziono klubu o takim id: " + club.getId());
+        }
     }
-
     @Override
     public void deleteClub (long clubId) {
 

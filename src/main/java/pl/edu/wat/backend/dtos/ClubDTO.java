@@ -1,19 +1,13 @@
 package pl.edu.wat.backend.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import pl.edu.wat.backend.entities.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class ClubResponse {
+@Data
+public class ClubDTO {
 
     private String clubName;
     private String shortname;

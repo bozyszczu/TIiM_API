@@ -1,16 +1,15 @@
 package pl.edu.wat.backend.services;
 
-import pl.edu.wat.backend.dtos.PlayerRequest;
-import pl.edu.wat.backend.dtos.PlayerResponse;
+import pl.edu.wat.backend.dtos.PlayerDTO;
 import pl.edu.wat.backend.entities.Player;
 import java.util.List;
 
 
 public interface PlayerService {
 
-    List<PlayerResponse> getPlayers();
+    List<Player> getPlayers();
     Player getPlayerById(long playerId);
-    Player addPlayer(PlayerRequest player);
-    PlayerResponse editPlayer(Long id, PlayerRequest request);
+    Player addPlayer(PlayerDTO player);
+    Player editPlayer(Player player);
     void deletePlayer(long id);
 }

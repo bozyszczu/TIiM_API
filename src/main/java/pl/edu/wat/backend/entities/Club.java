@@ -3,6 +3,7 @@ package pl.edu.wat.backend.entities;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table (name = "Clubs")
-
+@ConstructorBinding
 public class Club {
 
     @Id
@@ -38,4 +39,16 @@ public class Club {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn (name = "club_id", referencedColumnName = "id")
     private List <Player> players = new ArrayList<>();
+
+    public Club (String clubName, String shortname, String coach, String stadium, String webPage) {
+        this.clubName = clubName;
+        this.shortname = shortname;
+        this.coach = coach;
+        this.stadium = stadium;
+        this.webPage = webPage;
+    }
+
+    public Club () {
+
+    }
 }

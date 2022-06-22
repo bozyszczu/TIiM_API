@@ -6,5 +6,5 @@ import pl.edu.wat.backend.entities.Club;
 
 @Repository
 public interface ClubRepository extends JpaRepository <Club, Long> {
-    Club getClubById(long clubId);
+
 }
