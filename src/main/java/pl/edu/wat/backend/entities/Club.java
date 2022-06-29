@@ -36,16 +36,16 @@ public class Club {
     @Column(name = "WebPage")
     private String webPage;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn (name = "club_id", referencedColumnName = "id")
-    private List <Player> players = new ArrayList<>();
+    @Column(name = "Captain")
+    private String captain;
 
-    public Club (String clubName, String shortname, String coach, String stadium, String webPage) {
+    public Club (String clubName, String shortname, String coach, String stadium, String webPage, String captain) {
         this.clubName = clubName;
         this.shortname = shortname;
         this.coach = coach;
         this.stadium = stadium;
         this.webPage = webPage;
+        this.captain = captain;
     }
 
     public Club () {

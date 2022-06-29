@@ -44,7 +44,7 @@ public class ClubServiceImpl implements ClubService {
         newClub.setCoach(request.getCoach());
         newClub.setStadium(request.getStadium());
         newClub.setWebPage(request.getWebPage());
-        newClub.setPlayers(request.getPlayers());
+        newClub.setCaptain(request.getCaptain());
 
         return clubRepository.save(newClub);
     }
@@ -58,7 +58,7 @@ public class ClubServiceImpl implements ClubService {
             editedClub.setShortname(club.getShortname());
             editedClub.setStadium(club.getStadium());
             editedClub.setWebPage(club.getWebPage());
-            editedClub.setPlayers(club.getPlayers());
+            editedClub.setCaptain(club.getCaptain());
             clubRepository.save(club);
             return editedClub;
         } else {
@@ -67,7 +67,6 @@ public class ClubServiceImpl implements ClubService {
     }
     @Override
     public void deleteClub (long clubId) {
-
         Optional<Club> clubDb = this.clubRepository.findById(clubId);
         if (clubDb.isPresent()){
             this.clubRepository.delete(clubDb.get());

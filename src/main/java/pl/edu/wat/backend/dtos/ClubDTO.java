@@ -1,7 +1,6 @@
 package pl.edu.wat.backend.dtos;
 
 import lombok.Data;
-import pl.edu.wat.backend.entities.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,5 +13,5 @@ public class ClubDTO {
     private String coach;
     private String stadium;
     private String webPage;
-    private List<Player> players = new ArrayList<>();
+    private String captain;
 }
