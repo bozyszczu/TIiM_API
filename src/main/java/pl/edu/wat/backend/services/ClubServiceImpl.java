@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ClubServiceImpl implements ClubService {
 
 @Autowired
-    ClubRepository clubRepository;
+    private ClubRepository clubRepository;
 
     @Override
     public List<Club> getClubs() {

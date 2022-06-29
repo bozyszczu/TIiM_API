@@ -15,7 +15,7 @@ import java.util.Optional;
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
     @Autowired
-    PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
     @Override
     public List<Player> getPlayers () { return this.playerRepository.findAll();

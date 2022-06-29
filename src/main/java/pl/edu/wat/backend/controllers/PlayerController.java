@@ -1,6 +1,7 @@
 package pl.edu.wat.backend.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlayerController {
 
-    private final PlayerService playerService;
+    @Autowired
+    private PlayerService playerService;
 
     @GetMapping("players")
     public ResponseEntity<List<Player>> getPlayers() {
@@ -43,9 +45,8 @@ public class PlayerController {
     }
 
     @DeleteMapping("players/{id}")
-    public HttpStatus deletePlayer(@PathVariable long id) {
-
+    public ResponseEntity<?> deletePlayer(@PathVariable long id) {
         this.playerService.deletePlayer(id);
-        return HttpStatus.OK;
+        return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.OK);
     }
 }
